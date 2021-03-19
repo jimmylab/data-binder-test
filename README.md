@@ -2,5 +2,4 @@
 
 仿Vue.js-Watcher的动态数据绑定(直接操作DOM)，纯属试验性质。
 
-效果：
-[表单测试](http://htmlpreview.github.io/?https://raw.githubusercontent.com/jimmylab/data-binder-test/main/form-test.html)
+效果见：form-test.html，需clone到本地运行
