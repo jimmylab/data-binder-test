@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>表单数据绑定测试</title>
+	<meta charset="utf-8"/>
+	<style>
+		/* input[type="checkbox"], input[type="radio"] {
+			width: 123px !important;
+			height: 123px !important;
+		} */
+		input.checkbox, input.radiobox {
+			visibility: hidden;
+			width: 13px;
+			height: 13px;
+			position: relative;
+			/* left: -99999px; */
+		}
+		input.checkbox {
+			margin: 3px 3px 3px 4px;
+		}
+		input.radiobox {
+			margin: 3px 3px 0px 5px;
+		}
+		input.checkbox:before, input.radiobox:before {
+			content: "";
+			display: block;
+			visibility: visible;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			border-radius: 2px;
+			box-sizing: border-box;
+			border: 1px solid #767676;
+			position: absolute;
+			/* left: 99999px; */
+		}
+		input.radiobox:before {
+			border-radius: 100%;
+		}
+		input.checkbox:hover:before, input.radiobox:hover:before {
+			border-color: #4f4f4f;
+		}
+		input.checkbox:active:before, input.radiobox:active:before {
+			border-color: #8d8d8d;
+		}
+
+		input.checkbox:checked:before, input.radiobox:checked:after {
+			background-color: #0075ff;
+			border: none;
+		}
+		input.radiobox:checked:before {
+			border-color: #0075ff;
+		}
+		input.checkbox:checked:hover:before, input.radiobox:hover:after {
+			background-color: #005cc8;
+			border: none;
+		}
+		input.radiobox:checked:hover:before {
+			border-color: #005cc8;
+		}
+		input.checkbox:checked:active:before, input.radiobox:checked:active:after {
+			background-color: #3793ff;
+			border: none;
+		}
+		input.radiobox:checked:active:before {
+			border-color: #3793ff;
+		}
+		input.checkbox:after, input.radiobox:after {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 50%;
+			/* left: calc(99999px + 50%); */
+			left: 50%;
+		}
+		input.checkbox:after {
+			height: 55%;
+			width: 18%;
+			border: solid #fff;
+			border-width: 0 2.5px 2.5px 0;
+			margin-top: -45%;
+			margin-left: -15%;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+		input.radiobox:after {
+			width: 60%;
+			height: 60%;
+			background-color: #fff;
+			border-radius: 100%;
+			margin-left: -30%;
+			margin-top: -30%;
+		}
+		input.checkbox:checked:after, input.radiobox:checked:after {
+			visibility: visible;
+		}
+	</style>
+</head>
+<h2><script>document.write(document.title)</script></h2>
+<hr/>
+<div id="app">
+	<h3>文本框同步</h3>
+	<p><label class="test-class">TextA: <input type="text" data-model="text1"/></label></p>
+	<p><label>TextB: <input type="text" data-model="text1"/></label></p>
+	<hr/>
+
+	<h3>复选框</h3>
+	<p>
+		<label><input type="checkbox" class="checkbox" data-model="checkMulti" value="A"/>OptionA</label>
+		<label><input type="checkbox" class="checkbox" data-model="checkMulti" value="B"/>OptionB</label>
+		<label><input type="checkbox" class="checkbox" data-model="checkMulti" value="C"/>OptionC</label>
+	</p>
+	<p>
+		<label><input type="checkbox" data-model="checkMulti" value="A"/>OptionA</label>
+		<label><input type="checkbox" data-model="checkMulti" value="B"/>OptionB</label>
+		<label><input type="checkbox" data-model="checkMulti" value="C"/>OptionC</label>
+	</p>
+	<p>
+		<label><input type="checkbox" data-model="toggleOnly"/>toggle</label>
+		<span data-bind-class="{active: toggleOnly}">高亮切换</span>
+		<span data-bind-class="{active: toggleOpposite}">高亮切换反转(lazy computed)</span>
+		<!-- <span data-bind-class="{active: unexistClass}">不存在的class</span> -->
+	</p>
+	<hr/>
+
+	<h3>单选框</h3>
+	<p>
+		<label><input type="radio" data-model="checkSingle" class="radiobox" value="D"/>OptionD</label>
+		<label><input type="radio" data-model="checkSingle" class="radiobox" value="E"/>OptionE</label>
+		<label><input type="radio" data-model="checkSingle" class="radiobox" value="F"/>OptionF</label>
+	</p>
+	<p>
+		<label><input type="radio" data-model="checkSingle" value="D"/>OptionD</label>
+		<label><input type="radio" data-model="checkSingle" value="E"/>OptionE</label>
+		<label><input type="radio" data-model="checkSingle" value="F"/>OptionF</label>
+	</p>
+	<p>
+		<label><input type="radio" data-model="checkSingleBool" value="true" data-type="boolean"/>Option true</label>
+		<label><input type="radio" data-model="checkSingleBool" value="false" data-type="boolean"/>Option false</label>
+	</p>
+	<hr/>
+
+	<h3>下拉选框</h3>
+	<p>
+		单选：
+		<select data-model="selectSingle">
+			<option value="Jan">一月</option>
+			<option value="Feb">二月</option>
+			<option value="Mar">三月</option>
+			<option value="Apr">四月</option>
+			<option value="May">五月</option>
+			<option value="Jun">六月</option>
+		</select>
+	</p>
+	<p>
+		多选：
+		<select multiple data-model="selectMulti">
+			<option value="张三">张三</option>
+			<option value="李四">李四</option>
+			<option value="王五">王五</option>
+			<option value="赵六">赵六</option>
+			<option value="钱七">钱七</option>
+			<option value="孙八">孙八</option>
+		</select>
+	</p>
+	<hr/>
+	循环渲染：
+	<ol>
+		<li data-for="item in list" style="color: {{ item.color }}">{{ item.name }}</li>
+		<template>
+			<li data-for="item in list" style="color: {{ item.color }}">{{ item.name }}
+				<template>
+					<span data-for="ch in item">{{ch}} </span>
+				</template>
+			</li>
+		</template>
+	</ol>
+	<select data-model="selectSingle">
+		<option data-for="month in monthData" value="{{ month.val }}">{{ month.name }}</option>
+	</select>
+	<hr/>
+</div>
+<script src="data-binder.js"></script>
+<script>
+let binder;
+document.addEventListener('DOMContentLoaded', () => {
+	binder = new DataBinder({
+		el: '#app',
+		data: {
+			text1: '123456',
+			checkMulti: new Set(['A']),
+			// checkMulti: new Set(['A', 'Z']),
+			toggleOnly: false,
+			checkSingle: 'F',
+			selectSingle: 'Feb',
+			checkSingleBool: false,
+			selectMulti: new Set(['张三', '李四']),
+			list: [
+				{ color: '#6ca793', name: '凉瓜牛肉' },
+				{ color: '#b96404', name: '豉汁凤爪' },
+				{ color: '#d54420', name: '蒜蓉开边虾' }
+			],
+			monthData: [
+				{ name: '一月', val: 'Jan' },
+				{ name: '二月', val: 'Feb' },
+				{ name: '三月', val: 'Mar' },
+				{ name: '四月', val: 'Apr' },
+				{ name: '五月', val: 'May' },
+				{ name: '六月', val: 'Jun' },
+			]
+		},
+		onDataChange: (key, value) => {
+			console.log(`${key}: `, value)
+		},
+		computed: {
+			toggleOpposite: function(data) {
+				// Use 'data' argument in an arrow function, or 'this' in a normal function
+				return !this.toggleOnly
+			},
+		}
+	});
+});
+</script>
+</html>
